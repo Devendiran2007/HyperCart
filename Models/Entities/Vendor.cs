@@ -20,6 +20,12 @@ public class Vendor
 
     public bool IsVerified { get; set; } = false;
 
+    public double Latitude { get; set; }
+
+    public double Longitude { get; set; }
+
+    public int DeliveryRadiusKm { get; set; } = 5;
+
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     // Navigation
