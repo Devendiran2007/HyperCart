@@ -15,11 +15,13 @@ public class ProductService : IProductService
 {
     private readonly ApplicationDbContext _context;
     private readonly IImageUploadService _imageUploadService;
+    private readonly INotificationService _notificationService;
 
-    public ProductService(ApplicationDbContext context, IImageUploadService imageUploadService)
+    public ProductService(ApplicationDbContext context, IImageUploadService imageUploadService, INotificationService notificationService)
     {
         _context = context;
         _imageUploadService = imageUploadService;
+        _notificationService = notificationService;
     }
 
     public async Task<ProductResponse> CreateProductAsync(Guid userId, CreateProductRequest request)
@@ -85,6 +87,12 @@ public class ProductService : IProductService
 
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
+
+        await _notificationService.NotifyStockUpdateAsync(product.Id, product.Stock);
+        if (product.Stock < 10)
+        {
+            await _notificationService.NotifyLowStockAsync(product.VendorId, product.Id, product.Name, product.Stock);
+        }
 
         return new ProductResponse
         {
@@ -185,6 +193,12 @@ public class ProductService : IProductService
         }
 
         await _context.SaveChangesAsync();
+
+        await _notificationService.NotifyStockUpdateAsync(product.Id, product.Stock);
+        if (product.Stock < 10)
+        {
+            await _notificationService.NotifyLowStockAsync(product.VendorId, product.Id, product.Name, product.Stock);
+        }
 
         return new ProductResponse
         {
