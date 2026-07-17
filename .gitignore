@@ -1,0 +1,22 @@
+## .NET ignore
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+## Secrets & sensitive config
+appsettings.Development.json
+
+## Migrations (optional - remove if you want to track migrations)
+# Migrations/
+
+## Rider/JetBrains
+.idea/
+
+## VS Code
+.vscode/
+
+## OS
+.DS_Store
+Thumbs.db

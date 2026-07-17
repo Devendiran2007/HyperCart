@@ -1,0 +1,6 @@
+@HyperCart_HostAddress = http://localhost:5230
+
+GET {{HyperCart_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
