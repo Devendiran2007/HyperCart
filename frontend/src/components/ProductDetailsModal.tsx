@@ -62,16 +62,16 @@ export const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
           {/* Close button floating */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-20 p-2 bg-white/5 hover:bg-white/10 text-white rounded-full transition-transform active:scale-90 cursor-pointer"
+            className="absolute top-4 right-4 z-20 p-2 bg-black/5 hover:bg-black/10 text-slate-800 rounded-full transition-transform active:scale-90 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
 
           {/* Left Column: Image gallery */}
-          <div className="p-6 flex flex-col gap-4 border-r border-white/5 bg-surface/30">
+          <div className="p-6 flex flex-col gap-4 border-r border-black/[0.04] bg-surface/30">
             {/* Zoomable main frame */}
             <div
-              className="relative aspect-square rounded-2xl overflow-hidden cursor-crosshair border border-white/5 bg-surface"
+              className="relative aspect-square rounded-2xl overflow-hidden cursor-crosshair border border-black/[0.04] bg-surface"
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
             >
@@ -94,7 +94,7 @@ export const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
                     key={idx}
                     onClick={() => setActiveImage(url)}
                     className={`relative w-16 h-16 rounded-xl overflow-hidden border-2 cursor-pointer flex-shrink-0 transition-colors ${
-                      activeImage === url ? 'border-primary' : 'border-white/5 hover:border-white/15'
+                      activeImage === url ? 'border-primary' : 'border-black/[0.04] hover:border-black/[0.08]'
                     }`}
                   >
                     <img src={url} alt="" className="w-full h-full object-cover" />
@@ -118,7 +118,7 @@ export const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
                 )}
               </div>
 
-              <h2 className="text-xl md:text-2xl font-bold mt-3 text-white leading-tight">
+              <h2 className="text-xl md:text-2xl font-bold mt-3 text-slate-800 leading-tight">
                 {product.name}
               </h2>
 
@@ -126,24 +126,24 @@ export const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
               <div className="flex items-center gap-4 mt-3">
                 <div className="flex items-center text-warning gap-1">
                   <Star className="w-4 h-4 fill-current" />
-                  <span className="text-sm font-semibold text-white">{product.rating}</span>
+                  <span className="text-sm font-semibold text-slate-800">{product.rating}</span>
                 </div>
-                <span className="text-white/20">|</span>
+                <span className="text-slate-200">|</span>
                 <span className="text-xs text-textSecondary">{product.stock} units available</span>
               </div>
 
-              <div className="text-2xl font-black text-white mt-4">
+              <div className="text-2xl font-black text-slate-800 mt-4">
                 ${product.price.toFixed(2)}
               </div>
 
-              <div className="w-full h-[1px] bg-white/5 my-5" />
+              <div className="w-full h-[1px] bg-black/[0.04] my-5" />
 
               <p className="text-sm text-textSecondary leading-relaxed">
                 {product.description}
               </p>
 
               {/* AI Recommendation insights */}
-              <div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/5">
+              <div className="mt-6 p-4 rounded-2xl bg-black/[0.02] border border-black/[0.04]">
                 <h5 className="text-xs font-bold text-secondary uppercase tracking-widest flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
                   AI Companion Recommendation
@@ -161,7 +161,7 @@ export const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
                 disabled={product.stock === 0}
                 className={`flex-1 py-3 px-6 rounded-2xl font-semibold flex items-center justify-center gap-2 transition-transform active:scale-95 cursor-pointer ${
                   product.stock === 0
-                    ? 'bg-white/5 text-white/25 cursor-not-allowed'
+                    ? 'bg-black/5 text-slate-400 cursor-not-allowed'
                     : 'bg-primary hover:bg-primary/95 text-white shadow-lg'
                 }`}
               >

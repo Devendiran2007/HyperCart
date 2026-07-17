@@ -11,16 +11,13 @@ export const AdminDashboard: React.FC = () => {
     setStores(prev =>
       prev.map(s => (s.id === storeId ? { ...s, isVerified: true } : s))
     );
-    alert('Vendor store approved & verified successfully! Webhook triggered.');
   };
 
   const handleDeleteStore = (storeId: string) => {
     setStores(prev => prev.filter(s => s.id !== storeId));
-    alert('Vendor deleted.');
   };
 
-  // Calculations
-  const pendingApprovals = stores.filter(s => !s.isOpen).length;
+  const pendingApprovals = stores.filter(s => !s.isVerified).length;
 
   return (
     <div className="pb-32 pt-6 px-4 max-w-5xl mx-auto space-y-8">
@@ -32,7 +29,7 @@ export const AdminDashboard: React.FC = () => {
       >
         <div>
           <span className="text-textSecondary text-xs uppercase tracking-widest block font-medium">Enterprise Control</span>
-          <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
             Platform Operations
             <ShieldCheck className="w-5 h-5 text-primary" />
           </h1>
@@ -61,7 +58,7 @@ export const AdminDashboard: React.FC = () => {
                 <Icon className={`w-4 h-4 ${kpi.color}`} />
               </div>
               <div className="space-y-1">
-                <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">{kpi.val}</h3>
+                <h3 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">{kpi.val}</h3>
                 <span className="text-[9px] text-textSecondary block">{kpi.change}</span>
               </div>
             </motion.div>
@@ -71,10 +68,10 @@ export const AdminDashboard: React.FC = () => {
 
       {/* Grid: approvals and system graph */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Approvals */}
+        {/* Approvals Queue */}
         <div className="md:col-span-2 glass-panel p-6 rounded-3xl space-y-4">
           <div>
-            <h4 className="font-bold text-sm text-white">Vendor Verification Queue</h4>
+            <h4 className="font-bold text-sm text-slate-800">Vendor Verification Queue</h4>
             <span className="text-[10px] text-textSecondary">Requires manual audit of business records</span>
           </div>
 
@@ -82,7 +79,7 @@ export const AdminDashboard: React.FC = () => {
             {stores.map((store) => (
               <div
                 key={store.id}
-                className="p-4 bg-white/5 border border-white/5 rounded-2xl flex items-center justify-between gap-4"
+                className="p-4 bg-white/5 border border-black/[0.04] rounded-2xl flex items-center justify-between gap-4"
               >
                 <div className="flex items-center gap-3">
                   <img
@@ -91,7 +88,14 @@ export const AdminDashboard: React.FC = () => {
                     className="w-10 h-10 rounded-xl object-cover"
                   />
                   <div>
-                    <h5 className="font-bold text-xs text-white">{store.storeName}</h5>
+                    <h5 className="font-bold text-xs text-slate-800 flex items-center gap-1.5">
+                      {store.storeName}
+                      {store.isVerified && (
+                        <span className="text-[8px] font-bold px-1.5 py-0.5 bg-success/15 text-success rounded-full uppercase">
+                          Verified
+                        </span>
+                      )}
+                    </h5>
                     <p className="text-[10px] text-textSecondary line-clamp-1">{store.address}</p>
                     <span className="text-[9px] text-primary font-semibold mt-1 block">
                       Range: {store.deliveryRadiusKm}km Radius
@@ -100,15 +104,19 @@ export const AdminDashboard: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleVerifyStore(store.id)}
-                    className="p-2 bg-success/20 hover:bg-success/30 text-success rounded-xl transition-all cursor-pointer"
-                  >
-                    <Check className="w-4 h-4" />
-                  </button>
+                  {!store.isVerified && (
+                    <button
+                      onClick={() => handleVerifyStore(store.id)}
+                      className="p-2 bg-success/10 hover:bg-success/20 text-success rounded-xl transition-all cursor-pointer"
+                      title="Verify Vendor"
+                    >
+                      <Check className="w-4 h-4" />
+                    </button>
+                  )}
                   <button
                     onClick={() => handleDeleteStore(store.id)}
-                    className="p-2 bg-danger/20 hover:bg-danger/30 text-danger rounded-xl transition-all cursor-pointer"
+                    className="p-2 bg-danger/10 hover:bg-danger/20 text-danger rounded-xl transition-all cursor-pointer"
+                    title="Remove Vendor"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -121,7 +129,7 @@ export const AdminDashboard: React.FC = () => {
         {/* Platform chart */}
         <div className="glass-panel p-6 rounded-3xl space-y-4 flex flex-col justify-between">
           <div>
-            <h4 className="font-bold text-sm text-white">Transaction Logs</h4>
+            <h4 className="font-bold text-sm text-slate-800">Transaction Logs</h4>
             <span className="text-[10px] text-textSecondary">Aggregated processing volume</span>
           </div>
 
@@ -134,7 +142,7 @@ export const AdminDashboard: React.FC = () => {
                     <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <Tooltip contentStyle={{ background: '#101826', borderColor: 'rgba(255,255,255,0.08)', borderRadius: '12px', fontSize: '10px' }} />
+                <Tooltip contentStyle={{ background: '#ffffff', borderColor: 'rgba(0,0,0,0.06)', borderRadius: '12px', fontSize: '10px', color: '#1D1D1F' }} />
                 <Area type="monotone" dataKey="revenue" stroke="#8B5CF6" strokeWidth={2} fillOpacity={1} fill="url(#adminChart)" />
               </AreaChart>
             </ResponsiveContainer>

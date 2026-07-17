@@ -26,6 +26,7 @@ export interface Store {
   estimatedDeliveryTimeMinutes: number;
   distanceKm: number;
   coverUrl: string;
+  isVerified?: boolean;
 }
 
 export interface Category {
@@ -77,7 +78,8 @@ export const STORES: Store[] = [
     rating: 4.9,
     isOpen: true,
     estimatedDeliveryTimeMinutes: 18,
-    distanceKm: 0.8
+    distanceKm: 0.8,
+    isVerified: true
   },
   {
     id: 'store-2',
@@ -92,7 +94,8 @@ export const STORES: Store[] = [
     rating: 4.8,
     isOpen: true,
     estimatedDeliveryTimeMinutes: 25,
-    distanceKm: 1.4
+    distanceKm: 1.4,
+    isVerified: true
   },
   {
     id: 'store-3',
@@ -107,7 +110,8 @@ export const STORES: Store[] = [
     rating: 4.7,
     isOpen: true,
     estimatedDeliveryTimeMinutes: 30,
-    distanceKm: 2.1
+    distanceKm: 2.1,
+    isVerified: true
   },
   {
     id: 'store-4',
@@ -122,7 +126,40 @@ export const STORES: Store[] = [
     rating: 4.9,
     isOpen: false,
     estimatedDeliveryTimeMinutes: 22,
-    distanceKm: 1.9
+    distanceKm: 1.9,
+    isVerified: false
+  },
+  {
+    id: 'store-5',
+    storeName: 'Gourmet Glaze Donuts',
+    description: 'Luxury artisanal donuts, hot brews, and sweet confections.',
+    logoUrl: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=100&auto=format&fit=crop&q=80',
+    coverUrl: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&auto=format&fit=crop&q=80',
+    address: '9 Sugar Way, Union Square',
+    latitude: 37.7852,
+    longitude: -122.4082,
+    deliveryRadiusKm: 5,
+    rating: 4.6,
+    isOpen: true,
+    estimatedDeliveryTimeMinutes: 15,
+    distanceKm: 1.1,
+    isVerified: false
+  },
+  {
+    id: 'store-6',
+    storeName: 'Greenery Juice & Health Bar',
+    description: 'Cold-pressed wellness juices, organic superfood smoothies, and acai bowls.',
+    logoUrl: 'https://images.unsplash.com/photo-1628557006841-496a71b560df?w=100&auto=format&fit=crop&q=80',
+    coverUrl: 'https://images.unsplash.com/photo-1628557006841-496a71b560df?w=800&auto=format&fit=crop&q=80',
+    address: '32 Fit Lane, Mission District',
+    latitude: 37.7599,
+    longitude: -122.4148,
+    deliveryRadiusKm: 7,
+    rating: 4.8,
+    isOpen: true,
+    estimatedDeliveryTimeMinutes: 20,
+    distanceKm: 1.6,
+    isVerified: true
   }
 ];
 
@@ -151,13 +188,11 @@ export const PRODUCTS: Product[] = [
     name: 'Farm Fresh Strawberries',
     description: 'Vibrant organic strawberries perfect for breakfast or healthy snacks.',
     price: 5.49,
-    stock: 8, // Low Stock Alert
+    stock: 8,
     isAvailable: true,
     rating: 4.8,
     imageUrl: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&auto=format&fit=crop&q=80',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&auto=format&fit=crop&q=80'
-    ]
+    imageUrls: ['https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&auto=format&fit=crop&q=80']
   },
   {
     id: 'prod-3',
@@ -170,9 +205,20 @@ export const PRODUCTS: Product[] = [
     isAvailable: true,
     rating: 4.6,
     imageUrl: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&auto=format&fit=crop&q=80',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&auto=format&fit=crop&q=80'
-    ]
+    imageUrls: ['https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&auto=format&fit=crop&q=80']
+  },
+  {
+    id: 'prod-3b',
+    vendorId: 'store-1',
+    categoryId: 'cat-3',
+    name: 'Organic Pasture Eggs',
+    description: 'Free-range brown eggs laid by grass-fed chickens on our local partner farms.',
+    price: 6.20,
+    stock: 35,
+    isAvailable: true,
+    rating: 4.9,
+    imageUrl: 'https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1506976785307-8732e854ad03?w=500&auto=format&fit=crop&q=80']
   },
 
   // Store 2 Products
@@ -203,9 +249,20 @@ export const PRODUCTS: Product[] = [
     isAvailable: true,
     rating: 4.8,
     imageUrl: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&auto=format&fit=crop&q=80',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&auto=format&fit=crop&q=80'
-    ]
+    imageUrls: ['https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&auto=format&fit=crop&q=80']
+  },
+  {
+    id: 'prod-5b',
+    vendorId: 'store-2',
+    categoryId: 'cat-2',
+    name: 'Pain au Chocolat',
+    description: 'Classic dark chocolate stuffed flaky sweet puff pastry loaf.',
+    price: 4.20,
+    stock: 25,
+    isAvailable: true,
+    rating: 4.7,
+    imageUrl: 'https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1608198093002-ad4e005484ec?w=500&auto=format&fit=crop&q=80']
   },
 
   // Store 3 Products
@@ -216,13 +273,11 @@ export const PRODUCTS: Product[] = [
     name: 'Wild Caught Sockeye Salmon Fillet',
     description: 'Fresh sockeye salmon rich in Omega-3, sourced sustainably from Alaska.',
     price: 24.99,
-    stock: 5, // Low stock
+    stock: 5,
     isAvailable: true,
     rating: 4.9,
     imageUrl: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&auto=format&fit=crop&q=80',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&auto=format&fit=crop&q=80'
-    ]
+    imageUrls: ['https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=500&auto=format&fit=crop&q=80']
   },
   {
     id: 'prod-7',
@@ -235,12 +290,10 @@ export const PRODUCTS: Product[] = [
     isAvailable: true,
     rating: 4.9,
     imageUrl: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop&q=80',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop&q=80'
-    ]
+    imageUrls: ['https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop&q=80']
   },
 
-  // Store 4 Products (Dairy)
+  // Store 4 Products
   {
     id: 'prod-8',
     vendorId: 'store-4',
@@ -252,9 +305,63 @@ export const PRODUCTS: Product[] = [
     isAvailable: true,
     rating: 4.8,
     imageUrl: 'https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=500&auto=format&fit=crop&q=80',
-    imageUrls: [
-      'https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=500&auto=format&fit=crop&q=80'
-    ]
+    imageUrls: ['https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=500&auto=format&fit=crop&q=80']
+  },
+  {
+    id: 'prod-9',
+    vendorId: 'store-4',
+    categoryId: 'cat-3',
+    name: 'Organic Whole Milk',
+    description: 'Pasteurized whole milk rich in nutrients, bottled locally from grass-fed cows.',
+    price: 4.80,
+    stock: 40,
+    isAvailable: true,
+    rating: 4.9,
+    imageUrl: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&auto=format&fit=crop&q=80']
+  },
+
+  // Store 5 Products (Donuts)
+  {
+    id: 'prod-10',
+    vendorId: 'store-5',
+    categoryId: 'cat-5',
+    name: 'Classic Velvet Glazed Donut',
+    description: 'Our signature melt-in-the-mouth yeast raised donut topped with vanilla sugar glaze.',
+    price: 3.20,
+    stock: 60,
+    isAvailable: true,
+    rating: 4.7,
+    imageUrl: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500&auto=format&fit=crop&q=80']
+  },
+  {
+    id: 'prod-11',
+    vendorId: 'store-5',
+    categoryId: 'cat-6',
+    name: 'Cold Brew Macchiato',
+    description: 'Double espresso pulled slow over ice, layered with sweetened cold milk foam.',
+    price: 5.10,
+    stock: 50,
+    isAvailable: true,
+    rating: 4.8,
+    imageUrl: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=500&auto=format&fit=crop&q=80']
+  },
+
+  // Store 6 Products (Juice Health)
+  {
+    id: 'prod-12',
+    vendorId: 'store-6',
+    categoryId: 'cat-6',
+    name: 'Supergreen Detox Juice',
+    description: 'Cold-pressed spinach, green apple, cucumber, ginger, celery, and key lime juices.',
+    price: 7.90,
+    stock: 35,
+    isAvailable: true,
+    rating: 4.9,
+    imageUrl: 'https://images.unsplash.com/photo-1628557006841-496a71b560df?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1628557006841-496a71b560df?w=500&auto=format&fit=crop&q=80']
   }
 ];
 
@@ -285,6 +392,20 @@ export const MOCK_ORDERS: Order[] = [
     items: [
       { id: 'oi-3', productId: 'prod-4', productName: 'Artisanal Sourdough Batard', quantity: 1, price: 7.50 },
       { id: 'oi-4', productId: 'prod-2', productName: 'Farm Fresh Strawberries', quantity: 2, price: 5.49 }
+    ]
+  },
+  {
+    id: 'ord-3',
+    orderNumber: 'HC-2026-000003',
+    createdAt: '2026-07-17T10:45:00Z',
+    totalAmount: 43.80,
+    status: 'Confirmed',
+    paymentStatus: 'Paid',
+    shippingAddress: '100 Infinity Loop, Cupertino, CA',
+    paymentMethod: 'Apple Pay',
+    items: [
+      { id: 'oi-5', productId: 'prod-7', productName: 'Prime Ribeye Steak (300g)', quantity: 1, price: 32.50 },
+      { id: 'oi-6', productId: 'prod-11', productName: 'Cold Brew Macchiato', quantity: 2, price: 5.10 }
     ]
   }
 ];

@@ -19,14 +19,12 @@ export const Store: React.FC<StoreProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Filter products by vendor and optional category
   const storeProducts = PRODUCTS.filter((p) => {
     const isVendorProduct = p.vendorId === store.id;
     const matchesCategory = !selectedCategory || p.categoryId === selectedCategory;
     return isVendorProduct && matchesCategory;
   });
 
-  // Unique categories of products available in this store
   const storeProductCategoryIds = Array.from(
     new Set(PRODUCTS.filter(p => p.vendorId === store.id).map(p => p.categoryId))
   );
@@ -70,7 +68,7 @@ export const Store: React.FC<StoreProps> = ({
               className="w-20 h-20 rounded-2xl object-cover border-2 border-background shadow-md"
             />
             <div className="space-y-1.5">
-              <h1 className="text-xl md:text-2xl font-black text-white leading-tight flex items-center justify-center md:justify-start gap-2">
+              <h1 className="text-xl md:text-2xl font-black text-slate-800 leading-tight flex items-center justify-center md:justify-start gap-2">
                 {store.storeName}
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                   store.isOpen ? 'bg-success/15 text-success' : 'bg-danger/15 text-danger'
@@ -86,26 +84,26 @@ export const Store: React.FC<StoreProps> = ({
           </div>
 
           {/* Quick HUD Metrics */}
-          <div className="flex items-center gap-6 border-t md:border-t-0 md:border-l border-white/5 pt-4 md:pt-0 md:pl-6 w-full md:w-auto justify-around">
+          <div className="flex items-center gap-6 border-t md:border-t-0 md:border-l border-black/[0.04] pt-4 md:pt-0 md:pl-6 w-full md:w-auto justify-around">
             <div className="text-center">
               <span className="text-[10px] text-textSecondary uppercase tracking-widest block mb-0.5">Rating</span>
               <div className="flex items-center gap-1 justify-center text-warning">
                 <Star className="w-4 h-4 fill-current" />
-                <span className="text-sm font-bold text-white">{store.rating}</span>
+                <span className="text-sm font-bold text-slate-800">{store.rating}</span>
               </div>
             </div>
             <div className="text-center">
               <span className="text-[10px] text-textSecondary uppercase tracking-widest block mb-0.5">ETA</span>
               <div className="flex items-center gap-1 justify-center text-primary">
                 <Clock className="w-4 h-4" />
-                <span className="text-sm font-bold text-white">{store.estimatedDeliveryTimeMinutes}m</span>
+                <span className="text-sm font-bold text-slate-800">{store.estimatedDeliveryTimeMinutes}m</span>
               </div>
             </div>
             <div className="text-center">
               <span className="text-[10px] text-textSecondary uppercase tracking-widest block mb-0.5">Distance</span>
               <div className="flex items-center gap-1 justify-center text-secondary">
                 <Navigation className="w-4 h-4" />
-                <span className="text-sm font-bold text-white">{store.distanceKm}km</span>
+                <span className="text-sm font-bold text-slate-800">{store.distanceKm}km</span>
               </div>
             </div>
           </div>
@@ -119,7 +117,7 @@ export const Store: React.FC<StoreProps> = ({
               className={`px-4 py-2.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                 selectedCategory === null
                   ? 'bg-primary text-white shadow-md'
-                  : 'glass-panel text-textSecondary hover:text-white'
+                  : 'glass-panel text-textSecondary hover:text-slate-800'
               }`}
             >
               All Products
@@ -131,7 +129,7 @@ export const Store: React.FC<StoreProps> = ({
                 className={`px-4 py-2.5 rounded-xl text-xs font-semibold cursor-pointer transition-all flex items-center gap-1.5 ${
                   selectedCategory === cat.id
                     ? 'bg-primary text-white shadow-md'
-                    : 'glass-panel text-textSecondary hover:text-white'
+                    : 'glass-panel text-textSecondary hover:text-slate-800'
                 }`}
               >
                 <span>{cat.imageUrl}</span>

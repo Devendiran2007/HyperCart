@@ -25,14 +25,12 @@ export const Home: React.FC<HomeProps> = ({
     const matchesSearch = store.storeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           store.description.toLowerCase().includes(searchQuery.toLowerCase());
     
-    // Check if store has products in the selected category
     const hasCategoryProducts = !selectedCategory || 
       PRODUCTS.some(p => p.vendorId === store.id && p.categoryId === selectedCategory);
 
     return matchesSearch && hasCategoryProducts;
   });
 
-  // AI recommendations fallback (highly rated items)
   const aiRecommendations = PRODUCTS.filter(p => p.rating >= 4.8).slice(0, 4);
 
   return (
@@ -45,11 +43,11 @@ export const Home: React.FC<HomeProps> = ({
       >
         <div className="space-y-1">
           <span className="text-textSecondary text-xs uppercase tracking-widest block font-medium">Hyperlocal Hub</span>
-          <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">
             Good Morning, Devendiran
             <Sun className="w-5 h-5 text-warning animate-pulse" />
           </h1>
-          <div className="flex items-center gap-2 text-xs text-textSecondary cursor-pointer hover:text-white transition-colors">
+          <div className="flex items-center gap-2 text-xs text-textSecondary cursor-pointer hover:text-slate-800 transition-colors">
             <MapPin className="w-3.5 h-3.5 text-primary" />
             <span>100 Infinity Loop, Cupertino</span>
           </div>
@@ -60,7 +58,7 @@ export const Home: React.FC<HomeProps> = ({
           <Clock className="w-4 h-4 text-primary" />
           <div>
             <span className="text-[10px] text-textSecondary uppercase block">Average ETA</span>
-            <span className="text-xs font-bold text-white">18-25 Mins</span>
+            <span className="text-xs font-bold text-slate-800">18-25 Mins</span>
           </div>
         </div>
       </motion.div>
@@ -79,7 +77,7 @@ export const Home: React.FC<HomeProps> = ({
             placeholder="Search stores, sourdough, fresh apples..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-surface border border-white/5 rounded-2xl text-sm text-white focus:outline-none focus:border-primary transition-all shadow-lg"
+            className="w-full pl-12 pr-4 py-3 bg-surface border border-black/[0.04] rounded-2xl text-sm text-slate-800 focus:outline-none focus:border-primary transition-all shadow-lg"
           />
         </div>
 
@@ -88,7 +86,7 @@ export const Home: React.FC<HomeProps> = ({
           className={`p-3.5 rounded-2xl border transition-all active:scale-95 cursor-pointer flex items-center gap-2 ${
             showMap
               ? 'bg-primary/20 border-primary text-primary font-semibold'
-              : 'bg-surface border-white/5 text-textSecondary hover:text-white'
+              : 'bg-surface border-black/[0.04] text-textSecondary hover:text-slate-800'
           }`}
         >
           <Navigation className="w-5 h-5" />
@@ -112,14 +110,14 @@ export const Home: React.FC<HomeProps> = ({
 
       {/* Animated Category Pills */}
       <div className="space-y-3">
-        <h3 className="text-xs font-bold text-white uppercase tracking-widest">Explore Categories</h3>
+        <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest">Explore Categories</h3>
         <div className="flex items-center gap-2.5 overflow-x-auto pb-2 select-none">
           <button
             onClick={() => setSelectedCategory(null)}
             className={`px-4 py-2.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
               selectedCategory === null
                 ? 'bg-primary text-white shadow-md'
-                : 'glass-panel text-textSecondary hover:text-white'
+                : 'glass-panel text-textSecondary hover:text-slate-800'
             }`}
           >
             All Items
@@ -131,7 +129,7 @@ export const Home: React.FC<HomeProps> = ({
               className={`px-4 py-2.5 rounded-xl text-xs font-semibold cursor-pointer transition-all flex items-center gap-1.5 ${
                 selectedCategory === cat.id
                   ? 'bg-primary text-white shadow-md'
-                  : 'glass-panel text-textSecondary hover:text-white'
+                  : 'glass-panel text-textSecondary hover:text-slate-800'
               }`}
             >
               <span>{cat.imageUrl}</span>
@@ -149,7 +147,7 @@ export const Home: React.FC<HomeProps> = ({
         className="space-y-4"
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-1.5">
+          <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest flex items-center gap-1.5">
             <Sparkles className="w-4 h-4 text-secondary animate-pulse" />
             AI Tailored Recommendations
           </h3>
@@ -174,7 +172,7 @@ export const Home: React.FC<HomeProps> = ({
         transition={{ delay: 0.3 }}
         className="space-y-4"
       >
-        <h3 className="text-xs font-bold text-white uppercase tracking-widest flex items-center gap-1.5">
+        <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest flex items-center gap-1.5">
           <StoreIcon className="w-4 h-4 text-primary" />
           Featured Nearby Stores
         </h3>
@@ -198,7 +196,7 @@ export const Home: React.FC<HomeProps> = ({
                     alt={store.storeName}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-black/35" />
                   
                   {/* Rating / Distance Floating Badge */}
                   <div className="absolute bottom-3 left-4 flex gap-2">
@@ -216,10 +214,10 @@ export const Home: React.FC<HomeProps> = ({
                   <img
                     src={store.logoUrl}
                     alt={store.storeName}
-                    className="w-12 h-12 rounded-xl object-cover border border-white/5"
+                    className="w-12 h-12 rounded-xl object-cover border border-black/[0.04]"
                   />
                   <div className="space-y-1">
-                    <h4 className="font-bold text-sm text-white group-hover:text-primary transition-colors flex items-center gap-2">
+                    <h4 className="font-bold text-sm text-slate-800 group-hover:text-primary transition-colors flex items-center gap-2">
                       {store.storeName}
                       <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${
                         store.isOpen ? 'bg-success/15 text-success' : 'bg-danger/15 text-danger'

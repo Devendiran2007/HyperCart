@@ -16,7 +16,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // Stock status checks
   const isLowStock = product.stock > 0 && product.stock < 10;
   const isOutOfStock = product.stock === 0;
 
@@ -82,7 +81,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Product Details Section */}
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
-          <h4 className="font-semibold text-sm text-white line-clamp-1 group-hover:text-primary transition-colors cursor-pointer" onClick={() => onQuickView(product)}>
+          <h4 className="font-semibold text-sm text-slate-800 line-clamp-1 group-hover:text-primary transition-colors cursor-pointer" onClick={() => onQuickView(product)}>
             {product.name}
           </h4>
           <p className="text-xs text-textSecondary line-clamp-2 mt-1 min-h-[32px]">
@@ -93,7 +92,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex items-center justify-between mt-4">
           <div>
             <span className="text-[10px] text-textSecondary uppercase tracking-widest block">Price</span>
-            <span className="text-lg font-bold text-white">${product.price.toFixed(2)}</span>
+            <span className="text-lg font-bold text-slate-800">${product.price.toFixed(2)}</span>
           </div>
 
           <button
@@ -101,7 +100,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             onClick={() => onAddToCart(product)}
             className={`p-3 rounded-2xl shadow-md flex items-center justify-center transition-all ${
               isOutOfStock 
-                ? 'bg-white/5 text-white/20 cursor-not-allowed'
+                ? 'bg-black/5 text-slate-400 cursor-not-allowed'
                 : 'bg-primary hover:bg-primary/90 text-white cursor-pointer active:scale-95'
             }`}
           >
