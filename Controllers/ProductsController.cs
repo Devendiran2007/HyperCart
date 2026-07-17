@@ -1,11 +1,8 @@
-using HyperLocal.Helpers;
 using HyperLocal.Interfaces;
 using HyperLocal.Models.DTOs.Product;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -38,31 +35,8 @@ public class ProductsController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _productService.CreateProductAsync(userId, request);
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
-        }
-        catch (CategoryNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        var result = await _productService.CreateProductAsync(userId, request);
+        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
     [HttpPut("{id:guid}")]
@@ -81,27 +55,8 @@ public class ProductsController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _productService.UpdateProductAsync(userId, id, request);
-            return Ok(result);
-        }
-        catch (CategoryNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        var result = await _productService.UpdateProductAsync(userId, id, request);
+        return Ok(result);
     }
 
     [HttpDelete("{id:guid}")]
@@ -114,19 +69,8 @@ public class ProductsController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            await _productService.DeleteProductAsync(userId, id);
-            return NoContent();
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-        }
+        await _productService.DeleteProductAsync(userId, id);
+        return NoContent();
     }
 
     [HttpGet("{id:guid}")]

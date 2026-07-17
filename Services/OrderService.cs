@@ -196,22 +196,23 @@ public class OrderService : IOrderService
     public async Task<List<OrderResponse>> GetOrdersAsync(Guid userId, string role)
     {
         var query = _context.Orders.AsNoTracking().AsQueryable();
+        Guid? vendorId = null;
 
-        // 1. Filter orders based on user roles
         if (string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
         {
             // Admin sees all orders
         }
         else if (string.Equals(role, "Vendor", StringComparison.OrdinalIgnoreCase))
         {
-            var vendor = await _context.Vendors.FirstOrDefaultAsync(v => v.UserId == userId);
+            var vendor = await _context.Vendors.AsNoTracking().FirstOrDefaultAsync(v => v.UserId == userId);
             if (vendor == null)
             {
                 return new List<OrderResponse>();
             }
+            vendorId = vendor.Id;
 
             // Vendor only sees orders containing their products
-            query = query.Where(o => o.OrderItems.Any(oi => oi.Product.VendorId == vendor.Id));
+            query = query.Where(o => o.OrderItems.Any(oi => oi.Product.VendorId == vendorId.Value));
         }
         else
         {
@@ -219,58 +220,33 @@ public class OrderService : IOrderService
             query = query.Where(o => o.UserId == userId);
         }
 
-        // 2. Select and project
         var orders = await query
             .OrderByDescending(o => o.CreatedAt)
+            .Select(o => new OrderResponse
+            {
+                Id = o.Id,
+                OrderNumber = o.OrderNumber,
+                UserId = o.UserId,
+                TotalAmount = o.TotalAmount,
+                Status = o.Status,
+                PaymentStatus = o.PaymentStatus,
+                ShippingAddress = o.ShippingAddress,
+                PaymentMethod = o.PaymentMethod,
+                CreatedAt = o.CreatedAt,
+                Items = o.OrderItems
+                    .Where(oi => !vendorId.HasValue || oi.Product.VendorId == vendorId.Value)
+                    .Select(oi => new OrderItemResponse
+                    {
+                        Id = oi.Id,
+                        ProductId = oi.ProductId,
+                        ProductName = oi.Product.Name,
+                        Quantity = oi.Quantity,
+                        Price = oi.Price
+                    }).ToList()
+            })
             .ToListAsync();
 
-        var responseList = new List<OrderResponse>();
-
-        foreach (var order in orders)
-        {
-            var itemsQuery = _context.OrderItems
-                .AsNoTracking()
-                .Where(oi => oi.OrderId == order.Id);
-
-            // Filter items based on Vendor role
-            if (string.Equals(role, "Vendor", StringComparison.OrdinalIgnoreCase))
-            {
-                var vendor = await _context.Vendors.FirstOrDefaultAsync(v => v.UserId == userId);
-                if (vendor != null)
-                {
-                    itemsQuery = itemsQuery.Where(oi => oi.Product.VendorId == vendor.Id);
-                }
-            }
-
-            var items = await itemsQuery
-                .Select(oi => new OrderItemResponse
-                {
-                    Id = oi.Id,
-                    ProductId = oi.ProductId,
-                    ProductName = oi.Product.Name,
-                    Quantity = oi.Quantity,
-                    Price = oi.Price
-                })
-                .ToListAsync();
-
-            // Total amount for vendor should reflect their own revenue or full order amount.
-            // Returning the full order total is standard, but keeping the response correct for their view.
-            responseList.Add(new OrderResponse
-            {
-                Id = order.Id,
-                OrderNumber = order.OrderNumber,
-                UserId = order.UserId,
-                TotalAmount = order.TotalAmount,
-                Status = order.Status,
-                PaymentStatus = order.PaymentStatus,
-                ShippingAddress = order.ShippingAddress,
-                PaymentMethod = order.PaymentMethod,
-                CreatedAt = order.CreatedAt,
-                Items = items
-            });
-        }
-
-        return responseList;
+        return orders;
     }
 
     public async Task<OrderResponse?> GetOrderByIdAsync(Guid userId, string role, Guid orderId)
@@ -284,6 +260,8 @@ public class OrderService : IOrderService
             throw new KeyNotFoundException($"Order with ID {orderId} was not found.");
         }
 
+        Guid? vendorId = null;
+
         // Verify visibility based on roles
         if (string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
         {
@@ -291,14 +269,15 @@ public class OrderService : IOrderService
         }
         else if (string.Equals(role, "Vendor", StringComparison.OrdinalIgnoreCase))
         {
-            var vendor = await _context.Vendors.FirstOrDefaultAsync(v => v.UserId == userId);
+            var vendor = await _context.Vendors.AsNoTracking().FirstOrDefaultAsync(v => v.UserId == userId);
             if (vendor == null)
             {
                 throw new UnauthorizedAccessException("Logged-in user is not associated with any vendor profile.");
             }
+            vendorId = vendor.Id;
 
             var hasVendorItems = await _context.OrderItems
-                .AnyAsync(oi => oi.OrderId == orderId && oi.Product.VendorId == vendor.Id);
+                .AnyAsync(oi => oi.OrderId == orderId && oi.Product.VendorId == vendorId.Value);
 
             if (!hasVendorItems)
             {
@@ -318,13 +297,9 @@ public class OrderService : IOrderService
             .AsNoTracking()
             .Where(oi => oi.OrderId == order.Id);
 
-        if (string.Equals(role, "Vendor", StringComparison.OrdinalIgnoreCase))
+        if (vendorId.HasValue)
         {
-            var vendor = await _context.Vendors.FirstOrDefaultAsync(v => v.UserId == userId);
-            if (vendor != null)
-            {
-                itemsQuery = itemsQuery.Where(oi => oi.Product.VendorId == vendor.Id);
-            }
+            itemsQuery = itemsQuery.Where(oi => oi.Product.VendorId == vendorId.Value);
         }
 
         var items = await itemsQuery

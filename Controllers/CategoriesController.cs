@@ -1,4 +1,3 @@
-using HyperLocal.Helpers;
 using HyperLocal.Interfaces;
 using HyperLocal.Models.DTOs.Category;
 using Microsoft.AspNetCore.Authorization;
@@ -28,19 +27,8 @@ public class CategoriesController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        try
-         {
-            var result = await _categoryService.CreateAsync(request);
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
-        }
-        catch (DuplicateCategoryException ex)
-        {
-            return Conflict(new { message = ex.Message });
-        }
-        catch (ArgumentNullException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        var result = await _categoryService.CreateAsync(request);
+        return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
     [HttpGet]
@@ -55,19 +43,12 @@ public class CategoriesController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> GetById(Guid id)
     {
-        try
+        var result = await _categoryService.GetByIdAsync(id);
+        if (result == null)
         {
-            var result = await _categoryService.GetByIdAsync(id);
-            if (result == null)
-            {
-                return NotFound(new { message = $"Category with ID {id} was not found." });
-            }
-            return Ok(result);
+            return NotFound(new { message = $"Category with ID {id} was not found." });
         }
-        catch (CategoryNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        return Ok(result);
     }
 
     [HttpPut("{id:guid}")]
@@ -79,41 +60,19 @@ public class CategoriesController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        try
+        var result = await _categoryService.UpdateAsync(id, request);
+        if (result == null)
         {
-            var result = await _categoryService.UpdateAsync(id, request);
-            if (result == null)
-            {
-                return NotFound(new { message = $"Category with ID {id} was not found." });
-            }
-            return Ok(result);
+            return NotFound(new { message = $"Category with ID {id} was not found." });
         }
-        catch (CategoryNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (DuplicateCategoryException ex)
-        {
-            return Conflict(new { message = ex.Message });
-        }
-        catch (ArgumentNullException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        return Ok(result);
     }
 
     [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        try
-        {
-            await _categoryService.DeleteAsync(id);
-            return NoContent();
-        }
-        catch (CategoryNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        await _categoryService.DeleteAsync(id);
+        return NoContent();
     }
 }

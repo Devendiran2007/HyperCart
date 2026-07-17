@@ -58,11 +58,16 @@ builder.Services.AddScoped<IVendorDashboardService, VendorDashboardService>();
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IConnectionManager, ConnectionManager>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IHyperlocalSearchService, HyperlocalSearchService>();
+builder.Services.AddHttpClient<INvidiaAiService, NvidiaAiService>();
+builder.Services.AddScoped<IAiRecommendationService, AiRecommendationService>();
 
 builder.Services.AddControllers();
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+app.UseMiddleware<HyperLocal.Middleware.ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

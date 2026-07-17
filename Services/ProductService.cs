@@ -31,7 +31,7 @@ public class ProductService : IProductService
             throw new ArgumentNullException(nameof(request));
         }
 
-        var vendor = await _context.Vendors.FirstOrDefaultAsync(v => v.UserId == userId);
+        var vendor = await _context.Vendors.AsNoTracking().FirstOrDefaultAsync(v => v.UserId == userId);
         if (vendor == null)
         {
             throw new UnauthorizedAccessException("Logged-in user is not associated with any vendor profile.");
@@ -117,7 +117,7 @@ public class ProductService : IProductService
             throw new ArgumentNullException(nameof(request));
         }
 
-        var vendor = await _context.Vendors.FirstOrDefaultAsync(v => v.UserId == userId);
+        var vendor = await _context.Vendors.AsNoTracking().FirstOrDefaultAsync(v => v.UserId == userId);
         if (vendor == null)
         {
             throw new UnauthorizedAccessException("Logged-in user is not associated with any vendor profile.");
@@ -218,7 +218,7 @@ public class ProductService : IProductService
 
     public async Task<bool> DeleteProductAsync(Guid userId, Guid productId)
     {
-        var vendor = await _context.Vendors.FirstOrDefaultAsync(v => v.UserId == userId);
+        var vendor = await _context.Vendors.AsNoTracking().FirstOrDefaultAsync(v => v.UserId == userId);
         if (vendor == null)
         {
             throw new UnauthorizedAccessException("Logged-in user is not associated with any vendor profile.");

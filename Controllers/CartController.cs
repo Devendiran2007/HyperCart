@@ -1,10 +1,8 @@
 using HyperLocal.Interfaces;
 using HyperLocal.Models.DTOs.Cart;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -49,23 +47,8 @@ public class CartController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _cartService.AddToCartAsync(userId, request);
-            return Ok(result);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-        catch (ArgumentNullException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        var result = await _cartService.AddToCartAsync(userId, request);
+        return Ok(result);
     }
 
     [HttpPut("items/{id:guid}")]
@@ -82,23 +65,8 @@ public class CartController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _cartService.UpdateQuantityAsync(userId, id, request);
-            return Ok(result);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-        catch (ArgumentNullException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        var result = await _cartService.UpdateQuantityAsync(userId, id, request);
+        return Ok(result);
     }
 
     [HttpDelete("items/{id:guid}")]
@@ -110,15 +78,8 @@ public class CartController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _cartService.RemoveItemAsync(userId, id);
-            return Ok(result);
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var result = await _cartService.RemoveItemAsync(userId, id);
+        return Ok(result);
     }
 
     [HttpDelete]

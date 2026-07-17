@@ -1,6 +1,5 @@
 using HyperLocal.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
@@ -29,15 +28,8 @@ public class VendorDashboardController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _dashboardService.GetDashboardAsync(userId);
-            return Ok(result);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-        }
+        var result = await _dashboardService.GetDashboardAsync(userId);
+        return Ok(result);
     }
 
     [HttpGet("revenue-chart")]
@@ -49,15 +41,8 @@ public class VendorDashboardController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _dashboardService.GetRevenueChartAsync(userId);
-            return Ok(result);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-        }
+        var result = await _dashboardService.GetRevenueChartAsync(userId);
+        return Ok(result);
     }
 
     [HttpGet("top-products")]
@@ -69,15 +54,8 @@ public class VendorDashboardController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _dashboardService.GetTopProductsAsync(userId, limit);
-            return Ok(result);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-        }
+        var result = await _dashboardService.GetTopProductsAsync(userId, limit);
+        return Ok(result);
     }
 
     [HttpGet("recent-orders")]
@@ -89,14 +67,7 @@ public class VendorDashboardController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _dashboardService.GetRecentOrdersAsync(userId, limit);
-            return Ok(result);
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
-        }
+        var result = await _dashboardService.GetRecentOrdersAsync(userId, limit);
+        return Ok(result);
     }
 }

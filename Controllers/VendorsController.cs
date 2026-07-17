@@ -1,4 +1,3 @@
-using HyperLocal.Helpers;
 using HyperLocal.Interfaces;
 using HyperLocal.Models.DTOs.Vendor;
 using Microsoft.AspNetCore.Authorization;
@@ -35,23 +34,8 @@ public class VendorsController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _vendorService.CreateVendorAsync(userId, request);
-            return CreatedAtAction(nameof(GetMyStore), null, result);
-        }
-        catch (DuplicateVendorException ex)
-        {
-            return Conflict(new { message = ex.Message });
-        }
-        catch (InvalidOperationException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
-        catch (KeyNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var result = await _vendorService.CreateVendorAsync(userId, request);
+        return CreatedAtAction(nameof(GetMyStore), null, result);
     }
 
     [HttpGet("my-store")]
@@ -64,15 +48,8 @@ public class VendorsController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _vendorService.GetMyStoreAsync(userId);
-            return Ok(result);
-        }
-        catch (VendorNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var result = await _vendorService.GetMyStoreAsync(userId);
+        return Ok(result);
     }
 
     [HttpPut("my-store")]
@@ -90,19 +67,8 @@ public class VendorsController : ControllerBase
             return Unauthorized();
         }
 
-        try
-        {
-            var result = await _vendorService.UpdateVendorAsync(userId, request);
-            return Ok(result);
-        }
-        catch (VendorNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
-        catch (ArgumentNullException ex)
-        {
-            return BadRequest(new { message = ex.Message });
-        }
+        var result = await _vendorService.UpdateVendorAsync(userId, request);
+        return Ok(result);
     }
 
     [HttpGet]
@@ -117,29 +83,15 @@ public class VendorsController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Verify(Guid id)
     {
-        try
-        {
-            var result = await _vendorService.VerifyVendorAsync(id);
-            return Ok(result);
-        }
-        catch (VendorNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var result = await _vendorService.VerifyVendorAsync(id);
+        return Ok(result);
     }
 
     [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        try
-        {
-            await _vendorService.DeleteVendorAsync(id);
-            return NoContent();
-        }
-        catch (VendorNotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        await _vendorService.DeleteVendorAsync(id);
+        return NoContent();
     }
 }
