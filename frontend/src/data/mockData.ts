@@ -61,7 +61,9 @@ export const CATEGORIES: Category[] = [
   { id: 'cat-3', name: 'Dairy & Eggs', imageUrl: '🥛' },
   { id: 'cat-4', name: 'Meat & Seafood', imageUrl: '🥩' },
   { id: 'cat-5', name: 'Gourmet Treats', imageUrl: '🍩' },
-  { id: 'cat-6', name: 'Beverages', imageUrl: '🥤' }
+  { id: 'cat-6', name: 'Beverages', imageUrl: '🥤' },
+  { id: 'cat-7', name: 'Fashion & Wear', imageUrl: '👕' },
+  { id: 'cat-8', name: 'Home & Furniture', imageUrl: '🛋️' }
 ];
 
 export const STORES: Store[] = [
@@ -159,6 +161,38 @@ export const STORES: Store[] = [
     isOpen: true,
     estimatedDeliveryTimeMinutes: 20,
     distanceKm: 1.6,
+    isVerified: true
+  },
+  {
+    id: 'store-7',
+    storeName: 'Threads & Co. Boutique',
+    description: 'Handcrafted premium clothing, linen shirts, and minimalist wardrobe essentials.',
+    logoUrl: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=100&auto=format&fit=crop&q=80',
+    coverUrl: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=80',
+    address: '77 Fashion Boulevard, Silicon Valley',
+    latitude: 37.7812,
+    longitude: -122.4112,
+    deliveryRadiusKm: 10,
+    rating: 4.8,
+    isOpen: true,
+    estimatedDeliveryTimeMinutes: 35,
+    distanceKm: 2.4,
+    isVerified: true
+  },
+  {
+    id: 'store-8',
+    storeName: 'Nordic Loft Furniture',
+    description: 'Sleek Scandinavian furniture, oak work desks, and ambient architectural lighting.',
+    logoUrl: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=100&auto=format&fit=crop&q=80',
+    coverUrl: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&auto=format&fit=crop&q=80',
+    address: '108 Design District, San Francisco',
+    latitude: 37.7712,
+    longitude: -122.4042,
+    deliveryRadiusKm: 15,
+    rating: 4.9,
+    isOpen: true,
+    estimatedDeliveryTimeMinutes: 45,
+    distanceKm: 3.8,
     isVerified: true
   }
 ];
@@ -362,6 +396,88 @@ export const PRODUCTS: Product[] = [
     rating: 4.9,
     imageUrl: 'https://images.unsplash.com/photo-1628557006841-496a71b560df?w=500&auto=format&fit=crop&q=80',
     imageUrls: ['https://images.unsplash.com/photo-1628557006841-496a71b560df?w=500&auto=format&fit=crop&q=80']
+  },
+
+  // Store 7 Products (Threads & Co. Clothing Boutique)
+  {
+    id: 'prod-13',
+    vendorId: 'store-7',
+    categoryId: 'cat-7',
+    name: 'Premium Linen Resort Shirt',
+    description: 'Breathable, relaxed-fit resort shirt woven from organic French flax linen.',
+    price: 58.00,
+    stock: 15,
+    isAvailable: true,
+    rating: 4.8,
+    imageUrl: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&auto=format&fit=crop&q=80']
+  },
+  {
+    id: 'prod-14',
+    vendorId: 'store-7',
+    categoryId: 'cat-7',
+    name: 'Oversized Loopback Hoodie',
+    description: 'Heavyweight organic cotton loopback French terry hoodie in stone grey.',
+    price: 75.00,
+    stock: 22,
+    isAvailable: true,
+    rating: 4.9,
+    imageUrl: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500&auto=format&fit=crop&q=80']
+  },
+  {
+    id: 'prod-15',
+    vendorId: 'store-7',
+    categoryId: 'cat-7',
+    name: 'Classic White Knit Tee',
+    description: 'Ultra-soft combed long-staple cotton crewneck tee with a clean tailored hem.',
+    price: 28.00,
+    stock: 40,
+    isAvailable: true,
+    rating: 4.7,
+    imageUrl: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80']
+  },
+
+  // Store 8 Products (Nordic Loft Scandinavian Furniture)
+  {
+    id: 'prod-16',
+    vendorId: 'store-8',
+    categoryId: 'cat-8',
+    name: 'Minimalist Oak Writing Desk',
+    description: 'Solid oak workspace desk featuring clean lines, integrated wire grommets, and smooth sliders.',
+    price: 349.00,
+    stock: 4,
+    isAvailable: true,
+    rating: 4.9,
+    imageUrl: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=500&auto=format&fit=crop&q=80']
+  },
+  {
+    id: 'prod-17',
+    vendorId: 'store-8',
+    categoryId: 'cat-8',
+    name: 'Ergonomic Mesh Chair',
+    description: 'Office desk chair with adjustable lumbar support, 3D armrests, and high-performance mesh backing.',
+    price: 210.00,
+    stock: 8,
+    isAvailable: true,
+    rating: 4.8,
+    imageUrl: 'https://images.unsplash.com/photo-1505797149-43b0069ec26b?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1505797149-43b0069ec26b?w=500&auto=format&fit=crop&q=80']
+  },
+  {
+    id: 'prod-18',
+    vendorId: 'store-8',
+    categoryId: 'cat-8',
+    name: 'Frosted Glass Table Lamp',
+    description: 'A beautiful architectural spherical light source providing soft ambient workspace illumination.',
+    price: 49.00,
+    stock: 15,
+    isAvailable: true,
+    rating: 4.6,
+    imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&auto=format&fit=crop&q=80',
+    imageUrls: ['https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&auto=format&fit=crop&q=80']
   }
 ];
 

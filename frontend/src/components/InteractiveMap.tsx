@@ -21,6 +21,10 @@ export const InteractiveMap: React.FC<InteractiveMapProps> = ({ onSelectStore })
       case 'store-2': return { x: 620, y: 160 }; // Boulangerie
       case 'store-3': return { x: 330, y: 380 }; // Neptunes Sea
       case 'store-4': return { x: 550, y: 390 }; // Dairy Queen
+      case 'store-5': return { x: 260, y: 190 }; // Gourmet Glazes
+      case 'store-6': return { x: 740, y: 280 }; // Greenery Juices
+      case 'store-7': return { x: 480, y: 130 }; // Threads Boutique
+      case 'store-8': return { x: 700, y: 380 }; // Nordic Furniture
       default: return { x: 500, y: 300 };
     }
   };
