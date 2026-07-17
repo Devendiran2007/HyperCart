@@ -24,7 +24,7 @@ export const VendorDashboard: React.FC = () => {
   };
 
   return (
-    <div className="pb-32 pt-6 px-4 max-w-5xl mx-auto space-y-8">
+    <div className="pb-32 pt-6 px-4 md:px-8 lg:px-12 w-full max-w-none space-y-8">
       {/* Dashboard Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

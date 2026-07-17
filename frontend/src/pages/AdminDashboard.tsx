@@ -20,7 +20,7 @@ export const AdminDashboard: React.FC = () => {
   const pendingApprovals = stores.filter(s => !s.isVerified).length;
 
   return (
-    <div className="pb-32 pt-6 px-4 max-w-5xl mx-auto space-y-8">
+    <div className="pb-32 pt-6 px-4 md:px-8 lg:px-12 w-full max-w-none space-y-8">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

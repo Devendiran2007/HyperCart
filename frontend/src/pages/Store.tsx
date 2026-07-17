@@ -55,7 +55,7 @@ export const Store: React.FC<StoreProps> = ({
       </div>
 
       {/* Store Details Box */}
-      <div className="max-w-4xl mx-auto px-4 -mt-20 relative z-10 space-y-6">
+      <div className="w-full px-4 md:px-8 lg:px-12 -mt-20 relative z-10 space-y-6 max-w-none">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

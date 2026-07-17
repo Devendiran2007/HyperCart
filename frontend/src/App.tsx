@@ -266,7 +266,7 @@ export const App: React.FC = () => {
                 )}
 
                 {activeTab === 'search' && (
-                  <div className="pb-32 pt-6 px-4 max-w-4xl mx-auto space-y-6">
+                  <div className="pb-32 pt-6 px-4 md:px-8 lg:px-12 w-full max-w-none space-y-6">
                     <div>
                       <span className="text-textSecondary text-xs uppercase tracking-widest block font-medium">Catalog Index</span>
                       <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-2">

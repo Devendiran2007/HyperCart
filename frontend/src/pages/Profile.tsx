@@ -28,7 +28,7 @@ export const Profile: React.FC<ProfileProps> = ({ onSignOut, userName, userRole 
     .toUpperCase();
 
   return (
-    <div className="pb-32 pt-6 px-4 max-w-4xl mx-auto space-y-8">
+    <div className="pb-32 pt-6 px-4 md:px-8 lg:px-12 w-full max-w-none space-y-8">
       {/* Profile Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
